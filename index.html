@@ -8,7 +8,7 @@
     <title>exo2</title>
   </head>
   <body>
-    <section id="login-view" style="display: none">
+    <section id="login-view">
       <div id="login-top-bar"></div>
       <div id="login-content">
         <div id="login-content-left">
@@ -25,19 +25,20 @@
       <div id="login-bottom-bar"></div>
     </section>
 
-    <section id="main-view">
+    <section id="main-view" class="hidden">
       <div id="player-logo-button">
         <img src="/player.png" alt="" />
         <p>Musique</p>
       </div>
 
-      <div id="myWindow" class="window">
+      <div id="myWindow" class="window hidden">
         <div class="window-top">
           <button class="round green"></button
           ><button class="round yellow"></button
           ><button class="round red"></button>
         </div>
         <div class="window-content">
+          <button id="play-button">Play</button>
           <canvas>
             <audio>
               <source src="/audio.mp3" type="audio/mpeg" />

@@ -12,6 +12,7 @@ export function createGUI(parameters) {
     options: {
       thingus: 0,
       matrix: 1,
+      both: 2,
       blank: 99,
     },
   });

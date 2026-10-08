@@ -13,6 +13,10 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 
+  &.hidden {
+    display: none;
+  }
+
   #login-top-bar,
   #login-bottom-bar {
     width: 100%;
@@ -93,6 +97,10 @@ body {
   height: 100vh;
   display: flex;
 
+  &.hidden {
+    display: none;
+  }
+
   #player-logo-button {
     display: flex;
     flex-direction: column;
@@ -131,6 +139,10 @@ body {
     1px 1px 4px rgba(0, 0, 0, 0, 0.9),
     -1px 1px 4px rgba(0, 0, 0, 0, 0.9);
   background: #fff;
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .window-content {
@@ -138,7 +150,20 @@ body {
   color: #fff;
   height: 100%;
   font-family: monospace;
-  padding: 5px;
+
+  #play-button {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    border-radius: 50%;
+    background-color: #0f0;
+    cursor: pointer;
+    padding: 10px 20px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
 }
 
 .window-input {

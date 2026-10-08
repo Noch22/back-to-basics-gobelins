@@ -2,6 +2,10 @@ export default function setupUI() {
   const loginButton = document.getElementById("login-content-button");
   const playerButton = document.getElementById("player-logo-button");
 
+  document.addEventListener("DOMContentLoaded", () => {
+    const myWindow = document.getElementById("#myWindow");
+  });
+
   loginButton?.addEventListener("click", () => {
     switchView();
   });
@@ -12,6 +16,9 @@ export default function setupUI() {
 
   playerButton?.addEventListener("dblclick", () => {
     console.log("Double click detected on player button");
+    if (myWindow) {
+      myWindow.classList.toggle("hidden");
+    }
   });
 
   function switchView() {
@@ -19,8 +26,8 @@ export default function setupUI() {
     const mainView = document.getElementById("main-view");
 
     if (loginView && mainView) {
-      loginView.style.display = "none";
-      mainView.hidden = false;
+      loginView.classList.add("hidden");
+      mainView.classList.remove("hidden");
     }
     console.log("Switching view to main view");
   }
@@ -65,7 +72,7 @@ export default function setupUI() {
 
   document.addEventListener("click", (e) => {
     if (e.target.closest(".round.red")) {
-      e.target.closest(".window").remove();
+      e.target.closest(".window").classList.add("hidden");
     }
   });
 }
