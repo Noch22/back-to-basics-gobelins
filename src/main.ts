@@ -2,6 +2,7 @@ import { createGUI } from "./gui";
 import { arcCercle, line, arcTo } from "./draw";
 import { degreesToRadians } from "./utils";
 import { onBeat } from "./beat";
+import setupUI from "./ui";
 
 const parameters = {
   persistence: 0.02,
@@ -12,7 +13,6 @@ const gui = createGUI(parameters);
 const canvas = document.querySelector("canvas")!;
 const context = canvas.getContext("2d")!;
 const audioElement = document.querySelector("audio")!;
-const loginButton = document.getElementById("login-button")!;
 let playing = false;
 const waves = Array.from({ length: 4 }, () => ({
   x: Math.random() * canvas.width,
@@ -50,9 +50,7 @@ onBeat((timestamp: number) => {
   }
 });
 
-loginButton?.addEventListener("click", () => {
-  switchView();
-});
+addEventListener("DOMContentLoaded", setupUI);
 
 addEventListener("resize", resize);
 
@@ -82,8 +80,8 @@ function render() {
 }
 
 function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth / 2;
+  canvas.height = window.innerHeight / 1.5;
 }
 
 function tick() {
@@ -99,17 +97,6 @@ function play() {
 function pause() {
   playing = false;
   audioElement.pause();
-}
-
-function switchView() {
-  const loginView = document.getElementById("login-view");
-  const mainView = document.getElementById("main-view");
-
-  if (loginView && mainView) {
-    loginView.style.display = "none";
-    mainView.hidden = false;
-  }
-  console.log("Switching view to main view");
 }
 
 function thingus() {

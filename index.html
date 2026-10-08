@@ -8,16 +8,43 @@
     <title>exo2</title>
   </head>
   <body>
-    <section id="login-view">
-      <button id="login-button"></button>
+    <section id="login-view" style="display: none">
+      <div id="login-top-bar"></div>
+      <div id="login-content">
+        <div id="login-content-left">
+          <img src="/windows_xp_logo.png" alt="" />
+          <p>Pour commencer, cliquez sur votre nom d'utilisateur</p>
+        </div>
+        <div id="login-content-right">
+          <div id="login-content-button">
+            <img src="/admin_avatar.jpg" alt="" />
+            <p>Administrateur</p>
+          </div>
+        </div>
+      </div>
+      <div id="login-bottom-bar"></div>
     </section>
 
-    <section id="main-view" hidden>
-      <canvas>
-        <audio>
-          <source src="/audio.mp3" type="audio/mpeg" />
-        </audio>
-      </canvas>
+    <section id="main-view">
+      <div id="player-logo-button">
+        <img src="/player.png" alt="" />
+        <p>Musique</p>
+      </div>
+
+      <div id="myWindow" class="window">
+        <div class="window-top">
+          <button class="round green"></button
+          ><button class="round yellow"></button
+          ><button class="round red"></button>
+        </div>
+        <div class="window-content">
+          <canvas>
+            <audio>
+              <source src="/audio.mp3" type="audio/mpeg" />
+            </audio>
+          </canvas>
+      </div>
+
     </section>
     <script type="module" src="/src/main.ts"></script>
   </body>
