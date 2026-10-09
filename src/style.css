@@ -1,3 +1,14 @@
+html {
+  cursor: url("/cursor.cur"), default;
+}
+
+#login-content-button,
+#player-logo-button,
+#window-playlist ul li,
+#play-button {
+  cursor: url("/link.cur"), pointer;
+}
+
 body {
   margin: 0;
 }
@@ -64,7 +75,6 @@ body {
   #login-content-button {
     width: 80%;
     height: auto;
-    cursor: pointer;
     display: flex;
     background: linear-gradient(to right, #0b3db9, #0b3db9);
     border: 1px solid transparent;
@@ -84,6 +94,10 @@ body {
       color: white;
       margin-left: 10px;
       font-family: "Tahoma";
+    }
+
+    &:hover {
+      opacity: 0.8;
     }
   }
 }
@@ -123,7 +137,6 @@ body {
     }
 
     &:hover {
-      cursor: pointer;
       opacity: 0.8;
     }
   }
@@ -150,18 +163,40 @@ body {
   color: #fff;
   height: 100%;
   font-family: monospace;
+  border: 5px solid #0254e2;
+  position: relative;
 
   #play-button {
     position: absolute;
-    bottom: 0;
+    bottom: 10px;
     left: 10px;
     border-radius: 50%;
-    background-color: #0f0;
-    cursor: pointer;
+    background: linear-gradient(to right, #eaeaea, #ffffff);
     padding: 10px 20px;
 
     &:hover {
       opacity: 0.8;
+    }
+  }
+
+  #window-playlist {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    overflow-y: auto;
+    border: 1px solid #fff;
+    padding: 10px;
+    background-color: #111;
+
+    ul li {
+      list-style: none;
+      padding: 5px;
+      font-size: 10px;
+
+      &:hover {
+        background-color: #0254e2;
+      }
     }
   }
 }
@@ -185,14 +220,19 @@ body {
 
 .window-top,
 .window-top-no-bind {
+  display: flex;
+  flex-direction: row-reverse;
   cursor: move;
   text-align: right;
   height: 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
   padding: 5px;
-  background-color: #ddd;
+  background-color: #0254e2;
+}
+
+.window-top-buttons {
+  display: flex;
 }
 
 .window-top-no-bind {
@@ -200,25 +240,19 @@ body {
 }
 
 .round {
-  height: 16px;
-  width: 16px;
-  border-radius: 50%;
-  border: none;
+  height: 25px;
+  width: 25px;
+  border-radius: 5px;
   margin-right: 6px;
   box-shadow: 1px 1px 2px #000;
-}
-
-.green {
-  background-color: limegreen;
-}
-
-.yellow {
-  background-color: yellow;
+  border: 1px solid #fff;
+  background-color: #0254e2;
 }
 
 .red {
   cursor: pointer;
   background-color: red;
+  color: white;
 }
 
 #myWindow {

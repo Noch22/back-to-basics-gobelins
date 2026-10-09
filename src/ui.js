@@ -1,3 +1,5 @@
+import { onPlaying } from "./beat";
+
 export default function setupUI() {
   const loginButton = document.getElementById("login-content-button");
   const playerButton = document.getElementById("player-logo-button");
@@ -8,6 +10,8 @@ export default function setupUI() {
 
   loginButton?.addEventListener("click", () => {
     switchView();
+    let loginAudio = new Audio("/start.mp3");
+    loginAudio.play();
   });
 
   playerButton?.addEventListener("click", () => {

@@ -18,7 +18,7 @@
         <div id="login-content-right">
           <div id="login-content-button">
             <img src="/admin_avatar.jpg" alt="" />
-            <p>Administrateur</p>
+            <p>Julien</p>
           </div>
         </div>
       </div>
@@ -33,17 +33,25 @@
 
       <div id="myWindow" class="window hidden">
         <div class="window-top">
-          <button class="round green"></button
-          ><button class="round yellow"></button
-          ><button class="round red"></button>
+          <div class="window-top-buttons">
+            <button class="round red">X</button>
+          </div>
         </div>
         <div class="window-content">
-          <button id="play-button">Play</button>
+          <button id="play-button">▶</button>
           <canvas>
             <audio>
               <source src="/audio.mp3" type="audio/mpeg" />
             </audio>
           </canvas>
+          <div id="window-playlist">
+            <h3>Liste de lecture</h3>
+            <ul id="playlist">
+              <li id="song1">Crazy in Love - Beyoncé (feat. JAY-Z)</li>
+              <li id="song2">Murder On The Dancefloor - Sophie Ellis-Bextor</li>
+              <li id="song3">You're Beautiful - James Blunt</li>
+            </ul>
+          </div>
       </div>
 
     </section>

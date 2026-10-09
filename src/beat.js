@@ -7,6 +7,7 @@ const freqData = new Float32Array(bufferLength);
 
 // Load audio source (e.g., <audio> element)
 const audioElement = document.querySelector("audio");
+const playlist = document.getElementById("playlist");
 const sourceNode = audioCtx.createMediaElementSource(audioElement);
 sourceNode.connect(analyser);
 analyser.connect(audioCtx.destination);
@@ -14,9 +15,19 @@ analyser.connect(audioCtx.destination);
 // Spectral Flux variables
 let lastSpectrum = new Float32Array(bufferLength);
 let beatCallback = () => {};
+let playingCallback = () => {};
+let fluxCallback = () => {};
 
 export function onBeat(callback) {
   beatCallback = callback;
+}
+
+export function onPlaying(callback) {
+  playingCallback = callback;
+}
+
+export function onFlux(callback) {
+  fluxCallback = callback;
 }
 
 export function detectBeats() {
@@ -29,6 +40,7 @@ export function detectBeats() {
     flux += value;
     lastSpectrum[i] = freqData[i];
   }
+  fluxCallback(flux);
 
   // Threshold to determine beat
   if (flux > 1024) {
@@ -44,3 +56,25 @@ audioElement.onplay = () => {
   audioCtx.resume();
   detectBeats();
 };
+
+playlist.addEventListener("click", (event) => {
+  if (event.target.tagName === "LI") {
+    playingCallback(false);
+    audioElement.pause();
+    const songId = event.target.id;
+    switch (songId) {
+      case "song1":
+        audioElement.src = "/audio.mp3";
+        break;
+      case "song2":
+        audioElement.src = "/audio2.mp3";
+        break;
+      case "song3":
+        audioElement.src = "/audio3.mp3";
+        break;
+      default:
+        break;
+    }
+    playingCallback(true);
+  }
+});

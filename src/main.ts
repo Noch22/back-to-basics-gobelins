@@ -1,14 +1,14 @@
 import { createGUI } from "./gui";
-import { arcCercle, line, arcTo } from "./draw";
+import { arcCercle, line, arcTo, strokeStar } from "./draw";
 import { degreesToRadians, getRandomColor } from "./utils";
-import { onBeat } from "./beat";
+import { onBeat, onPlaying, onFlux } from "./beat";
 import setupUI from "./ui";
 
 const parameters = {
   persistence: 0.02,
-  scene: 1,
+  scene: 0,
 };
-const gui = createGUI(parameters);
+createGUI(parameters);
 
 const windowContent = document.querySelector(".window-content")!;
 const playButton = document.querySelector("#play-button")!;
@@ -46,11 +46,13 @@ onBeat((timestamp: number) => {
       onBeatThingus();
       break;
     case 1:
-      onBeatMatrix();
+      onBeatParticles();
       break;
     case 2:
-      onBeatMatrix();
-      onBeatThingus();
+      onBeatStarPower();
+      break;
+    case 3:
+      onBeatLine();
       break;
     default:
       console.warn("Unknown scene:", parameters.scene);
@@ -58,11 +60,35 @@ onBeat((timestamp: number) => {
   }
 });
 
+onFlux((flux: number) => {
+  if (!playing) return;
+  switch (parameters.scene) {
+    case 0:
+      break;
+    case 1:
+      break;
+    case 2:
+      break;
+    case 3:
+      onFluxLine(flux);
+      break;
+    default:
+      console.warn("Unknown scene:", parameters.scene);
+      break;
+  }
+});
+
+onPlaying((isPlaying: boolean) => {
+  isPlaying ? play() : pause();
+  resize();
+  tick();
+});
+
 addEventListener("DOMContentLoaded", setupUI);
 
 addEventListener("resize", resize);
 
-playButton?.addEventListener("click", async () => {
+playButton?.addEventListener("click", () => {
   playing ? pause() : play();
   resize();
   tick();
@@ -71,7 +97,6 @@ playButton?.addEventListener("click", async () => {
 function render() {
   if (!playing) return;
   context.translate(0, 0);
-  context.rotate(0);
   context.fillStyle = `rgba(0, 0, 0, ${parameters.persistence})`;
   context.fillRect(0, 0, canvas.width * 2, canvas.height * 2);
   switch (parameters.scene) {
@@ -79,11 +104,9 @@ function render() {
       thingus();
       break;
     case 1:
-      matrix();
+      particles();
       break;
     case 2:
-      matrix();
-      thingus();
       break;
     default:
       console.warn("Unknown scene:", parameters.scene);
@@ -133,30 +156,63 @@ function thingus() {
 
 function onBeatThingus() {
   waves.push({
-    x: canvas.width / 2,
+    x: Math.random() * canvas.width,
     length: Math.random() * 0.002 + 0.005,
     amplitude: Math.random() * 15 + 20,
     frequency: Math.random() * 0.02 + 0.005,
   });
   waves.shift();
   context.translate(canvas.width / 2, canvas.height / 2);
-  let rotation = degreesToRadians(Math.random() * 360);
+  let rotation = degreesToRadians(Math.random() * 180 - 90);
   context.rotate(rotation);
   context.translate(-canvas.width / 2, -canvas.height / 2);
 }
 
-function matrix() {
+function particles() {
   context.fillStyle = matrixColor || "#00FF00";
   for (let i = 0; i < canvas.width; i++) {
     context.fillRect(
-      i * 20,
+      i * 2.5,
       Math.random() * canvas.height,
-      Math.max(2.5, Math.random() * 10),
-      Math.max(10, Math.random() * 20),
+      Math.max(2.5, Math.random() * 2.5),
+      Math.max(2.5, Math.random() * 2.5),
     );
   }
 }
 
-function onBeatMatrix() {
+function onBeatParticles() {
   matrixColor = getRandomColor();
+}
+
+function onBeatStarPower() {
+  let r = Math.random() * canvas.height;
+  context.fillStyle = getRandomColor();
+  context.filter = `blur(${Math.random() * 30}px)`;
+  strokeStar(context, canvas.width / 2, canvas.height / 2, r, 10, 2.5);
+  context.filter = "none";
+}
+
+function onFluxLine(flux: number) {
+  context.fillStyle = `rgba(0, 0, 0, ${parameters.persistence})`;
+  context.fillRect(0, 0, canvas.width * 2, canvas.height * 2);
+  context.lineWidth = 1;
+  for (let i = 0; i < canvas.width; i++) {
+    context.beginPath();
+    context.moveTo(i * 5, canvas.height);
+    context.lineTo(i * 5, canvas.height + Math.random() * 500 - flux);
+    context.stroke();
+  }
+}
+
+function onBeatLine() {
+  let gradientLine = context.createLinearGradient(
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+  );
+  for (let i = 0; i < 10; i++) {
+    gradientLine.addColorStop(i / 9, getRandomColor());
+  }
+  context.strokeStyle = gradientLine;
 }

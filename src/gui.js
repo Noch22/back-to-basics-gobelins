@@ -11,8 +11,9 @@ export function createGUI(parameters) {
   pane.addBinding(parameters, "scene", {
     options: {
       thingus: 0,
-      matrix: 1,
-      both: 2,
+      particles: 1,
+      starPower: 2,
+      line: 3,
       blank: 99,
     },
   });

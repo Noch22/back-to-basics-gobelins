@@ -31,3 +31,19 @@ export function arcTo(ctx, x1, y1, x2, y2, radius) {
   ctx.arcTo(x1, y2, x2, y1, radius);
   ctx.stroke();
 }
+
+export function strokeStar(ctx, x, y, r, n, inset) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.translate(x, y);
+  ctx.moveTo(0, 0 - r);
+  for (var i = 0; i < n; i++) {
+    ctx.rotate(Math.PI / n);
+    ctx.lineTo(0, 0 - r * inset);
+    ctx.rotate(Math.PI / n);
+    ctx.lineTo(0, 0 - r);
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
