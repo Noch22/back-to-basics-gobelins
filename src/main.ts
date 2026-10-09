@@ -10,6 +10,8 @@ const parameters = {
 };
 createGUI(parameters);
 
+let lastScene = parameters.scene;
+
 const windowContent = document.querySelector(".window-content")!;
 const playButton = document.querySelector("#play-button")!;
 const canvas = document.querySelector("canvas")!;
@@ -94,6 +96,10 @@ function render() {
     default:
       console.warn("Unknown scene:", parameters.scene);
       break;
+  }
+  if (parameters.scene !== lastScene) {
+    context.reset();
+    lastScene = parameters.scene;
   }
 }
 
