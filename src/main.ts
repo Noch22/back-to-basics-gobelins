@@ -1,7 +1,7 @@
 import { createGUI } from "./gui";
 import { arcCercle, line, arcTo, strokeStar } from "./draw";
 import { degreesToRadians, getRandomColor } from "./utils";
-import { onBeat, onPlaying, onFlux } from "./beat";
+import { onBeat, onPlaying, onFlux, onFluxLine } from "./beat";
 import setupUI from "./ui";
 
 const parameters = {
@@ -60,24 +60,6 @@ onBeat((timestamp: number) => {
   }
 });
 
-onFlux((flux: number) => {
-  if (!playing) return;
-  switch (parameters.scene) {
-    case 0:
-      break;
-    case 1:
-      break;
-    case 2:
-      break;
-    case 3:
-      onFluxLine(flux);
-      break;
-    default:
-      console.warn("Unknown scene:", parameters.scene);
-      break;
-  }
-});
-
 onPlaying((isPlaying: boolean) => {
   isPlaying ? play() : pause();
   resize();
@@ -106,7 +88,8 @@ function render() {
     case 1:
       particles();
       break;
-    case 2:
+    case 3:
+      onFluxLine(context, canvas.width, canvas.height, gradientLine);
       break;
     default:
       console.warn("Unknown scene:", parameters.scene);
@@ -192,27 +175,14 @@ function onBeatStarPower() {
   context.filter = "none";
 }
 
-function onFluxLine(flux: number) {
-  context.fillStyle = `rgba(0, 0, 0, ${parameters.persistence})`;
-  context.fillRect(0, 0, canvas.width * 2, canvas.height * 2);
-  context.lineWidth = 1;
-  for (let i = 0; i < canvas.width; i++) {
-    context.beginPath();
-    context.moveTo(i * 5, canvas.height);
-    context.lineTo(i * 5, canvas.height + Math.random() * 500 - flux);
-    context.stroke();
-  }
-}
-
+let gradientLine = context.createLinearGradient(
+  0,
+  0,
+  canvas.width,
+  canvas.height,
+);
 function onBeatLine() {
-  let gradientLine = context.createLinearGradient(
-    0,
-    0,
-    canvas.width,
-    canvas.height,
-  );
   for (let i = 0; i < 10; i++) {
     gradientLine.addColorStop(i / 9, getRandomColor());
   }
-  context.strokeStyle = gradientLine;
 }

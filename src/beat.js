@@ -78,3 +78,17 @@ playlist.addEventListener("click", (event) => {
     playingCallback(true);
   }
 });
+
+export function onFluxLine(ctx, width, height, gradientLine) {
+  ctx.clearRect(0, 0, width, height);
+  ctx.lineWidth = 2;
+  let x = 0;
+  let barHeight;
+  let barWidth = (width / bufferLength) * 3;
+  for (let i = 0; i < bufferLength; i++) {
+    ctx.fillStyle = gradientLine;
+    barHeight = Math.pow(freqData[i] / 8, 2);
+    ctx.fillRect(x, height / 2 - barHeight, barWidth, barHeight * 2);
+    x += barWidth + 15;
+  }
+}
